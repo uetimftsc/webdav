@@ -1,0 +1,63 @@
+[8/27/21 2:34 PM] Usen Etim
+# encoding = utf-8
+import sys, os, base64, datetime, re, pickle, hashlib, logging
+import urllib
+from optparse import OptionParser
+import xml.etree.cElementTree as xml
+from collections import namedtuple
+import ssl
+
+try:
+    # Python 2
+    import urllib2 as urlrequest
+    import urllib2 as urlerror
+except ImportError:
+    # Python 3
+    import urllib.request as urlrequest
+    import urllib.error as urlerror
+
+
+# Open a connection to a URL using urllib
+domain = "staging.advocare.com"
+path = "/on/demandware.servlet/webdav/Sites/Logs/"
+url = "https://staging.advocare.com/on/demandware.servlet/webdav/Sites/Logs/"
+# filename = "/on/demandware.servlet/webdav/Sites/Logs"
+username = "AdvocareSfccLogging@advocare.com"
+#password = "YPld0(#Dr!st"
+password = "2xT#P2%~/=$t1e0n5[(J#UIk,W80Y~H7W2USC=Ay"
+#accesskey = "2xT#P2%~/=$t1e0n5[(J#UIk,W80Y~H7W2USC=Ay"
+PERSIS_DIR = "state"
+# set up authentication info
+#authinfo = urllib.request.HTTPBasicAuthHandler()
+#authinfo.add_password(realm='staging.advocare.com',
+ #                     uri='https://staging.advocare.com/on/demandware.servlet/webdav/Sites/Logs/custom-abl-blade1-9.mon.demandware.net-0-appserver-20210825.log',
+ #                     user='AdvocareSfccLogging@advocare.com',
+#                      passwd='2xT#P2%~/=$t1e0n5[(J#UIk,W80Y~H7W2USC=Ay')
+# Create a password Manager
+password_mgr = urllib.request.HTTPPasswordMgrWithDefaultRealm()
+
+# Add the username & Password.
+top_level_url = "https://staging.advocare.com/on/demandware.servlet/webdav/Sites/Logs/"
+password_mgr.add_password(None, top_level_url, username, password)
+
+handler = urllib.request.HTTPBasicAuthHandler(password_mgr)
+
+# Create "opener" (openerDirector instance)
+opener = urllib.request.build_opener(handler)
+# use the opener to fetch a URL
+opener.open(url)
+# Install the opener.
+urllib.request.install_opener(opener)
+
+
+webUrl = urllib.request.urlopen('https://staging.advocare.com/on/demandware.servlet/webdav/Sites/Logs/custom-abl-blade1-9.mon.demandware.net-0-appserver-20210825.log')
+
+#webUrl = urllib.request.urlopen('https://catfact.ninja/fact')
+# get the result code and print it
+print("result code:" + str(webUrl.getcode()))
+
+# read the data from the URL & print it
+data = webUrl.read()
+print (data)
+
+
