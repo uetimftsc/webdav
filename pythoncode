@@ -1,4 +1,3 @@
-[8/27/21 2:34 PM] Usen Etim
 # encoding = utf-8
 import sys, os, base64, datetime, re, pickle, hashlib, logging
 import urllib
